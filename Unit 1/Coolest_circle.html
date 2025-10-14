@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spinning Balls Animation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #b46060;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            border: 2px solid #b06b6b;
+            border-radius: 10px;
+            background: #a17ec6;
+        }
+        .controls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="10000" height="1000"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const radius = 150; 
+        const ballCount = 8; 
+        const ballRadius = 15;
+        
+        let angle = 0;
+        const angleStep = (2 * Math.PI) / ballCount;
+
+        const colors = [
+            '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4',
+            '#feca57', '#ff9ff3', '#54a0ff', '#5f27cd'
+        ];
+        
+        function drawBall(x, y, color, scale = 1) {
+            ctx.save();
+            ctx.globalAlpha = 0.8;
+            
+            const gradient = ctx.createRadialGradient(
+                x - ballRadius * 0.3, y - ballRadius * 0.3, 0,
+                x, y, ballRadius * scale
+            );
+            gradient.addColorStop(0, color);
+            gradient.addColorStop(0.7, color);
+            gradient.addColorStop(1, '#000');
+            
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(x, y, ballRadius * scale, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.beginPath();
+            ctx.arc(x - ballRadius * 0.3, y - ballRadius * 0.3, ballRadius * 0.3 * scale, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.restore();
+        }
+        
+        function animate() {
+
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            ctx.stroke();
+            
+            for (let i = 0; i < ballCount; i++) {
+                const ballAngle = angle + (i * angleStep);
+                const x = centerX + Math.cos(ballAngle) * radius;
+                const y = centerY + Math.sin(ballAngle) * radius;
+                const scale = 0.7 + 0.3 * Math.sin(ballAngle + Math.PI/2);
+                
+                drawBall(x, y, colors[i % colors.length], scale);
+            }
+            angle += 0.05;
+            
+            requestAnimationFrame(animate);
+        }
+        animate();
+        let speed = 0.05;
+        canvas.addEventListener('click', () => {
+            speed = speed === 0.05 ? 0.1 : speed === 0.1 ? 0.02 : 0.05;
+        });
+        
+        function animateWithSpeed() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            ctx.stroke();
+            
+            for (let i = 0; i < ballCount; i++) {
+                const ballAngle = angle + (i * angleStep);
+                const x = centerX + Math.cos(ballAngle) * radius;
+                const y = centerY + Math.sin(ballAngle) * radius;
+                const scale = 0.7 + 0.3 * Math.sin(ballAngle + Math.PI/2);
+                
+                drawBall(x, y, colors[i % colors.length], scale);
+            }
+            
+            angle += speed;
+            requestAnimationFrame(animateWithSpeed);
+        }
+        
+        setTimeout(() => {
+            animate = animateWithSpeed;
+        }, 100);
+    </script>
+</body>
+</html>

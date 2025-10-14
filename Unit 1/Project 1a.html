@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <title>Canvas Tutorial</title>
+        <style>
+            canvas {
+                border: 1px solid rgba(0, 255, 247, 1);
+            }
+            body {
+                background-color:rgb(255, 255, 255);
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas" width="2000" height="2000" ></canvas>
+        <script>
+            let canvas_x = 2000;
+            let canvas_y = 2000;
+            let center_x = canvas_x / 2;
+            let center_y = canvas_y / 2;
+            let radius = 150;
+            let angle = 0;
+            let ball_count = 20;
+            let r = 21;
+            let color0 = "#ff0000";
+            let color1 = "#00cfff";
+            let color2 = "#ffccff";
+            let color3 = "#00000f";
+
+            function draw() {
+                const canvas = document.getElementById("canvas");
+                if (canvas.getContext)  {
+                    const ctx = canvas.getContext("2d");
+                    ctx.fillStyle = "#f0fcff";
+                    ctx.fillRect(0, 0, canvas_x, canvas_y);
+
+                    for (let i = 0; i < ball_count; i++) {
+                        let ball_angle = angle + (i * (Math.PI * 2) / ball_count);
+                        let x = center_x + Math.cos(ball_angle*1.5) * radius;
+                        let y = center_y + Math.sin(ball_angle*1.2) * radius;
+
+                        ctx.beginPath();
+                        if (i % 3 == 0 && i != ball_count -1){
+                            ctx.fillStyle = color1;    
+                        }
+                        if (i % 3 == 1) {
+                            ctx.fillStyle = color3;
+                        } 
+                        if (i % 3 == 2) {
+                            ctx.fillStyle = color3;
+                        }
+                        if (i == ball_count - 1)  {
+                            ctx.fillStyle = color0;
+                        }
+
+
+                        ctx.arc(x, y, r, 0, Math.PI * 2, false);
+
+                        ctx.arc(x*1.1, y*1.1, r*1.2, 2, Math.PI * 2, false);
+                        
+                        ctx.arc(x*1.1, y*1.1, r*1.2, 0, Math.PI * 2, true);
+                        ctx.arc(x-11, y-11, r, 2, Math.PI * 2, true);
+                        //ctx.arc(x*0.5, y*0.5, r*1.2, 1, Math.PI * 2, false);
+
+                        ctx.fill();  
+                    }
+
+                    angle += 0.025;
+                }
+        
+            }
+            
+            setInterval(draw, 15)
+
+           /* function circle_create()    {
+                for (let i = 0; i < ball_count; i++) {
+                        let ball_angle = angle + (i * (Math.PI * 2) / ball_count);
+                        let x = center_x + Math.cos(ball_angle) * radius;
+                        let y = center_y + Math.sin(ball_angle) * radius;
+
+                        ctx.beginPath();
+                        if (i % 2 == 0) {
+                            ctx.fillStyle = "#00cfff";    
+                        }
+                        else    {
+                            ctx.fillStyle = "#ffccff";
+                        }
+
+                        ctx.arc(x, y, r, 0, Math.PI * 2, true);
+                        ctx.fill();
+                    }
+            }
+        */
+        </script>
+    </body>
+</html>
