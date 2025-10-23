@@ -3,15 +3,25 @@
     <head>
         <title>Project 1 &raquo; Part 2 </title>
         <style>
-            body {
-                background-color:rgb(255, 255, 255);
+            html, body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
-
+            canvas {
+                border: 1px solid rgba(0, 255, 247, 1);
+            }
         </style>
 
         <canvas id="project1_p5js"></canvas>
-        <script src = "p5.min.js"></script>
-        <script src = "new.js"></script>
+        <script src = "../libraries/p5.min.js"></script>
     </head>
-    <body></body>
+    <body>
+        <script src = "ball_game.js"></script>
+    </body>
 </html>
