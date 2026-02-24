@@ -4,8 +4,7 @@ A curated collection of interactive visual experiments, generative art sketches,
 
 This repo is organized as a “gallery”: each folder contains a self-contained project (usually an `index.html` you can open in the browser).
 
-> 📌 **Live Demo (optional):** If you enable GitHub Pages for this repo, add the link here.
-> - Live site: [TODO: add GitHub Pages URL]
+> - Live site:(https://thomas-sabu-cs.github.io/Creative-Coding-Projects/)
 
 ## Highlights
 
